@@ -4,9 +4,51 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntervalsWpf"
+        xmlns:int="clr-namespace:Intervals;assembly=Intervals"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="255.477" Name="mainWindow">
+    <Window.Resources>
+        <int:Interval x:Key="newItem" Start="0" End="4"/>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel DataContext="{x:Reference mainWindow}">
+            <GroupBox DataContext="{StaticResource newItem}">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Inicio:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <TextBox Width="30" Text="{Binding Start}" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                    <Label Content="-     Fin:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox Width="30" Text="{Binding End}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,0"/>
+                    <Button Content="+" Click="Button_Click"/>
+                </StackPanel>
+            </GroupBox>
+            <ListBox ItemsSource="{Binding UserIntervalList}">
+                <ListBox.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="int:Interval">
+                        <Border CornerRadius="5" BorderBrush="DodgerBlue" BorderThickness="2" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Inicio:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <Label Width="30" Content="{Binding Start}" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Label Content="-     Fin:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <Label Width="30" Content="{Binding End}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,0"/>
+                            </StackPanel>
+                        </Border>
+                    </HierarchicalDataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox ItemsSource="{Binding IntervalList}">
+                <ListBox.ItemTemplate>
+                    <HierarchicalDataTemplate>
+                        <Border Background="{Binding Color}" Height="{Binding Heigth}" Width="{Binding Heigth}"/>
+                    </HierarchicalDataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <local:IntervalsView Grid.Row="1" x:Name="Intervals" HorizontalAlignment="Stretch">
+
+        </local:IntervalsView>
     </Grid>
 </Window>
